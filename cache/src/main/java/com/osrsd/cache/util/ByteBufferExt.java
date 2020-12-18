@@ -8,4 +8,13 @@ public final class ByteBufferExt {
         return ((buffer.get() & 0xFF) << 16) | ((buffer.get() & 0xFF) << 8) | (buffer.get() & 0xFF);
     }
 
+    public static String getString(ByteBuffer buf) {
+        StringBuilder builder = new StringBuilder();
+        int b;
+        while ((b = (buf.get() & 0xff)) != 0) {
+            builder.append((char) b);
+        }
+        return builder.toString();
+    }
+
 }

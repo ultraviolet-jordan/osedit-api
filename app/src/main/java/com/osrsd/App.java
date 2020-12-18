@@ -1,8 +1,7 @@
 package com.osrsd;
 
 import com.displee.cache.CacheLibrary;
-import com.osrsd.command.PrintSequences;
-import com.osrsd.command.PrintSpotAnimations;
+import com.osrsd.command.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -32,8 +31,13 @@ public class App {
 
         final CacheLibrary library = CacheLibrary.create(defaultPath());
         final List<Runnable> commands = Arrays.asList(
+                new PrintInvs(library),
+                new PrintObjects(library),
+                new PrintEnums(library),
+                new PrintNpcs(library),
                 new PrintSequences(library),
-                new PrintSpotAnimations(library)
+                new PrintSpotAnimations(library),
+                new PrintVarbits(library)
         );
 
         int cores = Runtime.getRuntime().availableProcessors();
