@@ -13,7 +13,6 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class ObjectLoader implements Loader {
 
@@ -25,7 +24,7 @@ public class ObjectLoader implements Loader {
         assert archive != null;
         List<Definition> definitions = new ArrayList<>(archive.fileIds().length);
         Arrays.stream(archive.fileIds()).forEach(fileId -> {
-            byte[] data = Objects.requireNonNull(archive.file(fileId)).getData();
+            byte[] data = cache.data(index.getId(), archive.getId(), fileId);
             if (data != null) {
                 ObjectDefinition definition = new ObjectDefinition(fileId);
                 definition.decode(ByteBuffer.wrap(data));

@@ -1,6 +1,7 @@
 package com.osrsd.command;
 
 import com.displee.cache.CacheLibrary;
+import com.osrsd.App;
 import com.osrsd.cache.loader.ObjectLoader;
 import com.osrsd.command.util.Printer;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,9 @@ public class PrintObjects implements Runnable {
 
     @Override
     public void run() {
-        Printer.print(new ObjectLoader().load(cache));
+        long start = System.currentTimeMillis();
+        Printer.printContent(new ObjectLoader().load(cache));
+        App.prompt(PrintObjects.class, start);
     }
 
 }

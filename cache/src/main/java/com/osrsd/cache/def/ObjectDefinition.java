@@ -2,6 +2,7 @@ package com.osrsd.cache.def;
 
 import com.osrsd.cache.util.ByteBufferExt;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 @Data
+@Slf4j
 public final class ObjectDefinition implements Definition {
 
     private int id;
@@ -97,7 +99,7 @@ public final class ObjectDefinition implements Definition {
 
     @Override
     public void decode(ByteBuffer buffer) {
-        while (true) {
+        do {
             int opcode = buffer.get() & 0xff;
             if (opcode == 0) {
                 break;
@@ -279,8 +281,10 @@ public final class ObjectDefinition implements Definition {
                     params.put(key, value);
                 }
                 this.params = params;
+            } else {
+                log.warn(String.format("Unhandled definition opcode with id: %s.", opcode));
             }
-        }
+        } while (true);
         post();
     }
 
@@ -290,15 +294,10 @@ public final class ObjectDefinition implements Definition {
             if (objectModels != null && (objectTypes == null || objectTypes[0] == 10)) {
                 wallOrDoor = 1;
             }
-
-            for (int var1 = 0; var1 < 5; ++var1) {
-                if (actions[var1] != null) {
-                    wallOrDoor = 1;
-                    break;
-                }
+            if (IntStream.range(0, 5).anyMatch(index -> actions[index] != null)) {
+                wallOrDoor = 1;
             }
         }
-
         if (supportsItems == -1) {
             supportsItems = interactType != 0 ? 1 : 0;
         }

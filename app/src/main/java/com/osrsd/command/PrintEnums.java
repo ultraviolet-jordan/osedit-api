@@ -1,6 +1,7 @@
 package com.osrsd.command;
 
 import com.displee.cache.CacheLibrary;
+import com.osrsd.App;
 import com.osrsd.cache.loader.EnumLoader;
 import com.osrsd.command.util.Printer;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,9 @@ public class PrintEnums implements Runnable {
 
     @Override
     public void run() {
-        Printer.print(new EnumLoader().load(cache));
+        long start = System.currentTimeMillis();
+        Printer.printContent(new EnumLoader().load(cache));
+        App.prompt(PrintEnums.class, start);
     }
 
 }

@@ -1,13 +1,12 @@
 package com.osrsd.cache.def;
 
-import com.osrsd.cache.util.ByteBufferExt;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.stream.IntStream;
 
 @Data
+@Slf4j
 public final class InvDefinition implements Definition {
 
     private int id;
@@ -19,7 +18,7 @@ public final class InvDefinition implements Definition {
 
     @Override
     public void decode(ByteBuffer buffer) {
-        while (true) {
+        do {
             int opcode = buffer.get() & 0xff;
             if (opcode == 0) {
                 break;
@@ -27,8 +26,10 @@ public final class InvDefinition implements Definition {
 
             if (opcode == 2) {
                 size = buffer.getShort() & 0xffff;
+            } else {
+                log.warn(String.format("Unhandled definition opcode with id: %s.", opcode));
             }
-        }
+        } while (true);
     }
 
 }
