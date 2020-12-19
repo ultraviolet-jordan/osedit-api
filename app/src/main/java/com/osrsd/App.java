@@ -1,7 +1,7 @@
 package com.osrsd;
 
 import com.displee.cache.CacheLibrary;
-import com.osrsd.command.*;
+import com.osrsd.command.PrintSoundEffects;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -30,23 +30,23 @@ public class App {
         log.info("Executing application...");
         final File file = new File(String.format("%s/dump", defaultPath()));
 
-        if (!file.exists()) {
-            if (!file.mkdir()) {
-                throw new RuntimeException(String.format("Couldn't create directory at %s.", file.getPath()));
-            }
+        if (!file.exists() && !file.mkdir()) {
+            throw new RuntimeException(String.format("Couldn't create directory at %s.", file.getPath()));
         }
 
         final CacheLibrary library = CacheLibrary.create(defaultPath());
         final List<Runnable> commands = Arrays.asList(
-                new PrintInvs(library),
-                new PrintObjects(library),
-                new PrintEnums(library),
-                new PrintNpcs(library),
-                new PrintItems(library),
-                new PrintSequences(library),
-                new PrintSpotAnimations(library),
-                new PrintVarbits(library),
-                new PrintSprites(library)
+//                new PrintInvs(library),
+//                new PrintObjects(library),
+//                new PrintEnums(library),
+//                new PrintNpcs(library),
+//                new PrintItems(library),
+//                new PrintSequences(library),
+//                new PrintSpotAnimations(library),
+//                new PrintVarbits(library),
+                new PrintSoundEffects(library)
+//                new PrintSprites(library),
+//                new PrintTextures(library)
         );
 
         int cores = Runtime.getRuntime().availableProcessors();

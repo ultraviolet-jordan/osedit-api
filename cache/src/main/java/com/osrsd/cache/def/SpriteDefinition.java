@@ -2,14 +2,12 @@ package com.osrsd.cache.def;
 
 import com.osrsd.cache.util.ByteBufferExt;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 import java.util.stream.IntStream;
 
 @Data
-@Slf4j
 public final class SpriteDefinition implements Definition {
 
     private int id;
