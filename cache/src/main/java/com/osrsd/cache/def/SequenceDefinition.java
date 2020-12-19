@@ -2,10 +2,12 @@ package com.osrsd.cache.def;
 
 import com.osrsd.cache.util.ByteBufferExt;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
 
 @Data
+@Slf4j
 public final class SequenceDefinition implements Definition {
 
     private int id;
@@ -39,7 +41,7 @@ public final class SequenceDefinition implements Definition {
 
     @Override
     public void decode(ByteBuffer buffer) {
-        while (true) {
+        do {
             int opcode = buffer.get() & 0xff;
             if (opcode == 0) {
                 break;
@@ -100,8 +102,10 @@ public final class SequenceDefinition implements Definition {
                 for (index = 0; index < length; ++index) {
                     frameSounds[index] = ByteBufferExt.getMedium(buffer);
                 }
+            } else {
+                log.warn(String.format("Unhandled definition opcode with id: %s.", opcode));
             }
-        }
+        } while (true);
     }
 
 }

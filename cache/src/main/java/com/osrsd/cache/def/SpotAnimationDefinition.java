@@ -1,11 +1,13 @@
 package com.osrsd.cache.def;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
 import java.util.stream.IntStream;
 
 @Data
+@Slf4j
 public final class SpotAnimationDefinition implements Definition {
 
     private final int id;
@@ -33,7 +35,7 @@ public final class SpotAnimationDefinition implements Definition {
 
     @Override
     public void decode(ByteBuffer buffer) {
-        while (true) {
+        do {
             int opcode = buffer.get() & 0xff;
             if (opcode == 0) {
                 break;
@@ -69,8 +71,10 @@ public final class SpotAnimationDefinition implements Definition {
                     textureToFind[var4] = (short) (buffer.getShort() & 0xffff);
                     textureToReplace[var4] = (short) (buffer.getShort() & 0xffff);
                 });
+            } else {
+                log.warn(String.format("Unhandled definition opcode with id: %s.", opcode));
             }
-        }
+        } while (true);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.osrsd.command;
 
 import com.displee.cache.CacheLibrary;
+import com.osrsd.App;
 import com.osrsd.cache.loader.SpotAnimationLoader;
 import com.osrsd.command.util.Printer;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,9 @@ public class PrintSpotAnimations implements Runnable {
 
     @Override
     public void run() {
-        Printer.print(new SpotAnimationLoader().load(cache));
+        long start = System.currentTimeMillis();
+        Printer.printContent(new SpotAnimationLoader().load(cache));
+        App.prompt(PrintSpotAnimations.class, start);
     }
 
 }

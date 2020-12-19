@@ -6,7 +6,7 @@ import com.displee.cache.index.archive.Archive;
 import com.osrsd.cache.Archives;
 import com.osrsd.cache.Indexes;
 import com.osrsd.cache.def.Definition;
-import com.osrsd.cache.def.SequenceDefinition;
+import com.osrsd.cache.def.EnumDefinition;
 import com.osrsd.cache.util.Serializable;
 
 import java.nio.ByteBuffer;
@@ -14,24 +14,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SequenceLoader implements Loader {
+public class EnumLoader implements Loader {
 
     @Override
     public Serializable load(CacheLibrary cache) {
         Index index = cache.index(Indexes.CONFIG);
-        Archive archive = index.archive(Archives.SEQUENCES);
+        Archive archive = index.archive(Archives.ENUMS);
 
         assert archive != null;
         List<Definition> definitions = new ArrayList<>(archive.fileIds().length);
         Arrays.stream(archive.fileIds()).forEach(fileId -> {
             byte[] data = cache.data(index.getId(), archive.getId(), fileId);
             if (data != null) {
-                SequenceDefinition definition = new SequenceDefinition(fileId);
+                EnumDefinition definition = new EnumDefinition(fileId);
                 definition.decode(ByteBuffer.wrap(data));
                 definitions.add(definition);
             }
         });
-        return new Serializable(this, definitions, "/sequences");
+        return new Serializable(this, definitions, "/enums");
     }
 
 }
