@@ -1,7 +1,7 @@
 package com.osrsd;
 
 import com.displee.cache.CacheLibrary;
-import com.osrsd.command.PrintSoundEffects;
+import com.osrsd.command.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -35,18 +35,19 @@ public class App {
         }
 
         final CacheLibrary library = CacheLibrary.create(defaultPath());
-        final List<Runnable> commands = Arrays.asList(
-//                new PrintInvs(library),
-//                new PrintObjects(library),
-//                new PrintEnums(library),
-//                new PrintNpcs(library),
-//                new PrintItems(library),
-//                new PrintSequences(library),
-//                new PrintSpotAnimations(library),
-//                new PrintVarbits(library),
-                new PrintSoundEffects(library)
-//                new PrintSprites(library),
-//                new PrintTextures(library)
+        final List<Runnable> commands = List.of(
+                new PrintInvs(library),
+                new PrintObjects(library),
+                new PrintEnums(library),
+                new PrintNpcs(library),
+                new PrintItems(library),
+                new PrintParams(library),
+                new PrintSequences(library),
+                new PrintSpotAnimations(library),
+                new PrintVarbits(library),
+                new PrintSoundEffects(library),
+                new PrintSprites(library),
+                new PrintTextures(library)
         );
 
         int cores = Runtime.getRuntime().availableProcessors();
@@ -64,7 +65,7 @@ public class App {
     }
 
     public static void prompt(Class<? extends Runnable> command, long start) {
-       log.info(String.format("%s took %sms to dump.", command.getSimpleName(), System.currentTimeMillis() - start));
+        log.info(String.format("%s took %sms to dump.", command.getSimpleName(), System.currentTimeMillis() - start));
     }
 
 }
