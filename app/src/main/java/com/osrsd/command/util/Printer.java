@@ -6,6 +6,7 @@ import com.osrsd.App;
 import com.osrsd.cache.def.SoundEffectDefinition;
 import com.osrsd.cache.def.SpriteDefinition;
 import com.osrsd.cache.util.Serializable;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioFileFormat;
@@ -15,6 +16,7 @@ import javax.sound.sampled.AudioSystem;
 import java.io.*;
 import java.util.stream.IntStream;
 
+@Slf4j
 public class Printer {
 
     private static final Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
@@ -23,7 +25,7 @@ public class Printer {
         try (FileWriter fileWriter = new FileWriter(String.format("%s/%s.json", String.format("%s/dump", App.defaultPath()), service.getPath()))) {
             gson.toJson(service.getDefinitions(), fileWriter);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
         }
     }
 
@@ -39,7 +41,7 @@ public class Printer {
                         try {
                             ImageIO.write(sprite.getFrames()[frame], "png", new File(file.getPath(), String.format("%s_%s.png", sprite.getId(), frame)));
                         } catch (IOException e) {
-                            throw new RuntimeException(e);
+                            log.error(e.getMessage());
                         }
                     });
                 });
@@ -63,7 +65,7 @@ public class Printer {
                         dos.write(bos.toByteArray());
                         dos.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        log.error(e.getMessage());
                     }
                 });
     }
