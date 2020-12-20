@@ -1,13 +1,12 @@
 package com.osrsd;
 
-import com.displee.cache.CacheLibrary;
+import com.osrsd.cache.Library;
 import com.osrsd.command.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
@@ -27,14 +26,17 @@ public class App {
     }
 
     public static void main(String... args) {
-        log.info("Executing application...");
+        log.info("Executing...");
         final File file = new File(String.format("%s/dump", defaultPath()));
 
         if (!file.exists() && !file.mkdir()) {
             throw new RuntimeException(String.format("Couldn't create directory at %s.", file.getPath()));
         }
+        init();
+    }
 
-        final CacheLibrary library = CacheLibrary.create(defaultPath());
+    private static void init() {
+        final Library library = new Library(defaultPath());
         final List<Runnable> commands = List.of(
                 new PrintInvs(library),
                 new PrintObjects(library),
@@ -51,12 +53,12 @@ public class App {
         );
 
         int cores = Runtime.getRuntime().availableProcessors();
-        if (cores == 1) {
-            commands.forEach(Runnable::run);
-        } else {
+        if (cores > 2) {
             final ExecutorService pool = Executors.newFixedThreadPool(cores);
             commands.forEach(pool::execute);
             pool.shutdown();
+        } else {
+            commands.forEach(Runnable::run);
         }
     }
 
