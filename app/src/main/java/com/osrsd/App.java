@@ -33,7 +33,7 @@ public final class App {
         final File file = new File(String.format("%s/dump", baseDirectory()));
 
         if (!file.exists() && !file.mkdir()) {
-            throw new RuntimeException(String.format("Couldn't create directory at %s.", file.getPath()));
+            throw new RuntimeException(String.format("Could not create directory at %s.", file.getPath()));
         }
         init();
     }
@@ -55,7 +55,8 @@ public final class App {
                 new PrintVarbits(library),
                 new PrintSoundEffects(library),
                 new PrintSprites(library),
-                new PrintTextures(library)
+                new PrintTextures(library),
+                new PrintHealthBars(library)
         );
 
         int cores = Runtime.getRuntime().availableProcessors();

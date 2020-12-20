@@ -20,7 +20,7 @@ public class TextureLoader implements Loader {
 
     @Override
     public Serializable load(Library library) {
-        Index index = library.getCacheLibrary().index(Indexes.TEXTURES);
+        Index index = library.index(Indexes.TEXTURES);
         Archive archive = index.archive(0);
 
         assert archive != null;
@@ -32,7 +32,7 @@ public class TextureLoader implements Loader {
             }
         });
 
-        Index spriteIndex = library.getCacheLibrary().index(Indexes.SPRITES);
+        Index spriteIndex = library.index(Indexes.SPRITES);
         List<Definition> definitions = new ArrayList<>(textures.size());
         textures.forEach(definition -> {
             Arrays.stream(definition.getFileIds()).forEach(fileId -> {

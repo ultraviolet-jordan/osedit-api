@@ -10,4 +10,5 @@ public final class Configs {
     public static final int SEQUENCES = 12;
     public static final int SPOT_ANIMS = 13;
     public static final int VARBITS = 14;
+    public static final int HEALTH_BARS = 33;
 }

@@ -19,7 +19,7 @@ public class SequenceLoader implements Loader {
 
     @Override
     public Serializable load(Library library) {
-        Index index = library.getCacheLibrary().index(Indexes.CONFIG);
+        Index index = library.index(Indexes.CONFIG);
         Archive archive = index.archive(Configs.SEQUENCES);
 
         assert archive != null;

@@ -20,19 +20,21 @@ import java.util.stream.IntStream;
 @Slf4j
 public final class Printer {
 
+    static final Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+
     /**
      * Uses {@link Gson} to "print" serializable data into a readable format.
      *
      * @param serializable The data wrapped in a {@link Serializable}.
      */
     public static void printContent(Serializable serializable) {
-        final Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         final File file = new File(String.format("%s/%s.json", String.format("%s/dump", App.baseDirectory()), serializable.getPath()));
         if (file.exists() && !file.delete()) {
             throw new RuntimeException(String.format("Could not delete file at %s.", file.getPath()));
         }
         try (FileWriter fileWriter = new FileWriter(file)) {
             gson.toJson(serializable.getDefinitions(), fileWriter);
+            fileWriter.flush();
         } catch (IOException e) {
             log.error(String.format("There was a problem when printing content to %s.", serializable.getPath()), e);
         }
@@ -88,9 +90,12 @@ public final class Printer {
                     ByteArrayOutputStream out = new ByteArrayOutputStream();
                     try {
                         AudioSystem.write(stream, AudioFileFormat.Type.WAVE, out);
+                        stream.close();
                         DataOutputStream dos = new DataOutputStream(new FileOutputStream(audio));
                         dos.write(out.toByteArray());
+                        out.flush();
                         dos.flush();
+                        out.close();
                         dos.close();
                     } catch (IOException e) {
                         log.error(String.format("There was a problem when printing audio to %s.", serializable.getPath()), e);

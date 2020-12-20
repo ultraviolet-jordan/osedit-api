@@ -17,7 +17,7 @@ public class SpriteLoader implements Loader {
 
     @Override
     public Serializable load(Library library) {
-        Index index = library.getCacheLibrary().index(Indexes.SPRITES);
+        Index index = library.index(Indexes.SPRITES);
 
         List<Definition> definitions = new ArrayList<>(index.archives().length);
         Arrays.stream(index.archives()).forEach(archive -> {
