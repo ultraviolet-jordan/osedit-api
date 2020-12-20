@@ -7,6 +7,7 @@ import com.osrsd.cache.Indexes;
 import com.osrsd.cache.Library;
 import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.ObjectDefinition;
+import com.osrsd.cache.provider.ObjectProvider;
 import com.osrsd.cache.util.Serializable;
 
 import java.nio.ByteBuffer;
@@ -26,9 +27,7 @@ public class ObjectLoader implements Loader {
         Arrays.stream(archive.fileIds()).forEach(fileId -> {
             byte[] data = library.data(index.getId(), archive.getId(), fileId);
             if (data != null) {
-                ObjectDefinition definition = new ObjectDefinition(fileId);
-                definition.decode(ByteBuffer.wrap(data));
-                definitions.add(definition);
+                definitions.add(ObjectProvider.decode(ByteBuffer.wrap(data), new ObjectDefinition(fileId)));
             }
         });
         return new Serializable(this, definitions, "/objects");

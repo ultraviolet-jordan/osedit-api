@@ -7,6 +7,7 @@ import com.osrsd.cache.Indexes;
 import com.osrsd.cache.Library;
 import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.ParamDefinition;
+import com.osrsd.cache.provider.ParamProvider;
 import com.osrsd.cache.util.Serializable;
 
 import java.nio.ByteBuffer;
@@ -26,9 +27,7 @@ public class ParamLoader implements Loader {
         Arrays.stream(archive.fileIds()).forEach(fileId -> {
             byte[] data = library.data(index.getId(), archive.getId(), fileId);
             if (data != null) {
-                ParamDefinition definition = new ParamDefinition(fileId);
-                definition.decode(ByteBuffer.wrap(data));
-                definitions.add(definition);
+                definitions.add(ParamProvider.decode(ByteBuffer.wrap(data), new ParamDefinition(fileId)));
             }
         });
         return new Serializable(this, definitions, "/params");

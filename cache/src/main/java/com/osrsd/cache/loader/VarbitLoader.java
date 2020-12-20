@@ -7,6 +7,7 @@ import com.osrsd.cache.Indexes;
 import com.osrsd.cache.Library;
 import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.VarbitDefinition;
+import com.osrsd.cache.provider.VarbitProvider;
 import com.osrsd.cache.util.Serializable;
 
 import java.nio.ByteBuffer;
@@ -26,9 +27,7 @@ public class VarbitLoader implements Loader {
         Arrays.stream(archive.fileIds()).forEach(fileId -> {
             byte[] data = library.data(index.getId(), archive.getId(), fileId);
             if (data != null) {
-                VarbitDefinition definition = new VarbitDefinition(fileId);
-                definition.decode(ByteBuffer.wrap(data));
-                definitions.add(definition);
+                definitions.add(VarbitProvider.decode(ByteBuffer.wrap(data), new VarbitDefinition(fileId)));
             }
         });
         return new Serializable(this, definitions, "/varbits");

@@ -5,6 +5,7 @@ import com.osrsd.cache.Indexes;
 import com.osrsd.cache.Library;
 import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.SoundEffectDefinition;
+import com.osrsd.cache.provider.SoundEffectProvider;
 import com.osrsd.cache.util.Serializable;
 
 import java.nio.ByteBuffer;
@@ -22,9 +23,7 @@ public class SoundEffectLoader implements Loader {
         Arrays.stream(index.archives()).forEach(archive -> {
             byte[] data = library.data(index.getId(), archive.getId(), 0);
             if (data != null) {
-                SoundEffectDefinition definition = new SoundEffectDefinition(archive.getId());
-                definition.decode(ByteBuffer.wrap(data));
-                definitions.add(definition);
+                definitions.add(SoundEffectProvider.decode(ByteBuffer.wrap(data), new SoundEffectDefinition(archive.getId())));
             }
         });
         return new Serializable(this, definitions, "/soundeffects");

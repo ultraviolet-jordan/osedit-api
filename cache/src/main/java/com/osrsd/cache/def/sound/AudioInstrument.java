@@ -46,6 +46,23 @@ public final class AudioInstrument {
         pitchBaseSteps = new int[5];
     }
 
+    public static void method3854(int[] var0, int var1, int var2) {
+        for (var2 = var2 + var1 - 7; var1 < var2; var0[var1++] = 0) {
+            var0[var1++] = 0;
+            var0[var1++] = 0;
+            var0[var1++] = 0;
+            var0[var1++] = 0;
+            var0[var1++] = 0;
+            var0[var1++] = 0;
+            var0[var1++] = 0;
+        }
+
+        var2 += 7;
+        while (var1 < var2) {
+            var0[var1++] = 0;
+        }
+    }
+
     public final void decode(ByteBuffer buffer) {
         pitch = new AudioEnvelope();
         pitch.decode(buffer);
@@ -263,24 +280,6 @@ public final class AudioInstrument {
             }
         }
         return samples;
-    }
-
-    public static void method3854(int[] var0, int var1, int var2) {
-        for (var2 = var2 + var1 - 7; var1 < var2; var0[var1++] = 0) {
-            var0[var1++] = 0;
-            var0[var1++] = 0;
-            var0[var1++] = 0;
-            var0[var1++] = 0;
-            var0[var1++] = 0;
-            var0[var1++] = 0;
-            var0[var1++] = 0;
-        }
-
-        var2 += 7;
-        while (var1 < var2) {
-            var0[var1++] = 0;
-        }
-
     }
 
 }

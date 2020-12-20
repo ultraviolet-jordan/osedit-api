@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.osrsd.App;
 import com.osrsd.cache.def.SoundEffectDefinition;
 import com.osrsd.cache.def.SpriteDefinition;
+import com.osrsd.cache.provider.SoundEffectProvider;
 import com.osrsd.cache.util.Serializable;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,11 +18,16 @@ import java.io.*;
 import java.util.stream.IntStream;
 
 @Slf4j
-public class Printer {
+public final class Printer {
 
+    /**
+     * Uses {@link Gson} to "print" serializable data into a readable format.
+     *
+     * @param serializable The data wrapped in a {@link Serializable}.
+     */
     public static void printContent(Serializable serializable) {
         final Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-        final File file = new File(String.format("%s/%s.json", String.format("%s/dump", App.defaultPath()), serializable.getPath()));
+        final File file = new File(String.format("%s/%s.json", String.format("%s/dump", App.baseDirectory()), serializable.getPath()));
         if (file.exists() && !file.delete()) {
             throw new RuntimeException(String.format("Could not delete file at %s.", file.getPath()));
         }
@@ -32,10 +38,15 @@ public class Printer {
         }
     }
 
+    /**
+     * Uses {@link ImageIO} to "print" serializable data into a .png format.
+     *
+     * @param serializable The data wrapped in a {@link Serializable}.
+     */
     public static void printImage(Serializable serializable) {
-        final File file = new File(String.format("%s/dump%s", App.defaultPath(), serializable.getPath()));
+        final File file = new File(String.format("%s/dump%s", App.baseDirectory(), serializable.getPath()));
         if (!file.exists() && !file.mkdir()) {
-            throw new RuntimeException(String.format("Couldn't create directory at %s.", file.getPath()));
+            throw new RuntimeException(String.format("Could not create directory at %s.", file.getPath()));
         }
         serializable.getDefinitions().stream().filter(definition -> definition instanceof SpriteDefinition)
                 .forEach(definition -> {
@@ -54,10 +65,15 @@ public class Printer {
                 });
     }
 
+    /**
+     * Uses {@link AudioSystem} and {@link DataOutputStream} to "print" serializable data into a .wav format.
+     *
+     * @param serializable The data wrapped in a {@link Serializable}.
+     */
     public static void printAudio(Serializable serializable) {
-        final File file = new File(String.format("%s/dump%s", App.defaultPath(), serializable.getPath()));
+        final File file = new File(String.format("%s/dump%s", App.baseDirectory(), serializable.getPath()));
         if (!file.exists() && !file.mkdir()) {
-            throw new RuntimeException(String.format("Couldn't create directory at %s.", file.getPath()));
+            throw new RuntimeException(String.format("Could not create directory at %s.", file.getPath()));
         }
         serializable.getDefinitions().stream().filter(definition -> definition instanceof SoundEffectDefinition)
                 .forEach(definition -> {
@@ -66,7 +82,7 @@ public class Printer {
                     if (audio.exists() && !audio.delete()) {
                         throw new RuntimeException(String.format("Could not delete file at %s.", audio.getPath()));
                     }
-                    byte[] data = soundEffect.mix();
+                    byte[] data = SoundEffectProvider.mix(soundEffect);
                     AudioFormat format = new AudioFormat(22050, 8, 1, true, false);
                     AudioInputStream stream = new AudioInputStream(new ByteArrayInputStream(data), format, data.length);
                     ByteArrayOutputStream out = new ByteArrayOutputStream();

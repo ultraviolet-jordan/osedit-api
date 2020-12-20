@@ -7,6 +7,7 @@ import com.osrsd.cache.Indexes;
 import com.osrsd.cache.Library;
 import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.SequenceDefinition;
+import com.osrsd.cache.provider.SequenceProvider;
 import com.osrsd.cache.util.Serializable;
 
 import java.nio.ByteBuffer;
@@ -26,9 +27,7 @@ public class SequenceLoader implements Loader {
         Arrays.stream(archive.fileIds()).forEach(fileId -> {
             byte[] data = library.data(index.getId(), archive.getId(), fileId);
             if (data != null) {
-                SequenceDefinition definition = new SequenceDefinition(fileId);
-                definition.decode(ByteBuffer.wrap(data));
-                definitions.add(definition);
+                definitions.add(SequenceProvider.decode(ByteBuffer.wrap(data), new SequenceDefinition(fileId)));
             }
         });
         return new Serializable(this, definitions, "/sequences");

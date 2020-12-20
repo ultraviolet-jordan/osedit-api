@@ -7,6 +7,8 @@ import com.osrsd.cache.Library;
 import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.SpriteDefinition;
 import com.osrsd.cache.def.TextureDefinition;
+import com.osrsd.cache.provider.SpriteProvider;
+import com.osrsd.cache.provider.TextureProvider;
 import com.osrsd.cache.util.Serializable;
 
 import java.nio.ByteBuffer;
@@ -26,9 +28,7 @@ public class TextureLoader implements Loader {
         Arrays.stream(archive.fileIds()).forEach(fileId -> {
             byte[] data = library.data(index.getId(), archive.getId(), fileId);
             if (data != null) {
-                TextureDefinition definition = new TextureDefinition(fileId);
-                definition.decode(ByteBuffer.wrap(data));
-                textures.add(definition);
+                textures.add((TextureDefinition) TextureProvider.decode(ByteBuffer.wrap(data), new TextureDefinition(fileId)));
             }
         });
 
@@ -38,9 +38,7 @@ public class TextureLoader implements Loader {
             Arrays.stream(definition.getFileIds()).forEach(fileId -> {
                 byte[] data = library.data(spriteIndex.getId(), fileId, 0);
                 if (data != null) {
-                    SpriteDefinition spriteDefinition = new SpriteDefinition(fileId);
-                    spriteDefinition.decode(ByteBuffer.wrap(data));
-                    definitions.add(spriteDefinition);
+                    definitions.add(TextureProvider.decodeAsSprite(ByteBuffer.wrap(data), new SpriteDefinition(fileId)));
                 }
             });
         });

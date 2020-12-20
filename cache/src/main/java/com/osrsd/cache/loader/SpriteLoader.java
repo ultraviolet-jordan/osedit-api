@@ -5,6 +5,7 @@ import com.osrsd.cache.Indexes;
 import com.osrsd.cache.Library;
 import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.SpriteDefinition;
+import com.osrsd.cache.provider.SpriteProvider;
 import com.osrsd.cache.util.Serializable;
 
 import java.nio.ByteBuffer;
@@ -22,9 +23,7 @@ public class SpriteLoader implements Loader {
         Arrays.stream(index.archives()).forEach(archive -> {
             byte[] data = library.data(index.getId(), archive.getId(), 0);
             if (data != null) {
-                SpriteDefinition definition = new SpriteDefinition(archive.getId());
-                definition.decode(ByteBuffer.wrap(data));
-                definitions.add(definition);
+                definitions.add(SpriteProvider.decode(ByteBuffer.wrap(data), new SpriteDefinition(archive.getId())));
             }
         });
         return new Serializable(this, definitions, "/sprites");
