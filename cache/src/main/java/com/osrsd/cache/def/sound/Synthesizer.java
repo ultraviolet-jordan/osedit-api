@@ -6,7 +6,7 @@ import java.nio.ByteBuffer;
 
 @Data
 public class Synthesizer {
-    
+
     private int[] pairs;
     private int[][][] phases;
     private int[][][] magnitudes;

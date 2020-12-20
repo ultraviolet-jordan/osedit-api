@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 public final class ByteBufferExt {
 
     public static int getMedium(ByteBuffer buffer) {
-        return ((buffer.get() & 0xFF) << 16) | ((buffer.get() & 0xFF) << 8) | (buffer.get() & 0xFF);
+        return ((buffer.get() & 0xff) << 16) | ((buffer.get() & 0xff) << 8) | (buffer.get() & 0xff);
     }
 
     public static String getString(ByteBuffer buf) {

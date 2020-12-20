@@ -1,6 +1,6 @@
 package com.osrsd.cache;
 
-public final class Archives {
+public final class Configs {
     public static final int INVS = 5;
     public static final int OBJECTS = 6;
     public static final int ENUMS = 8;
