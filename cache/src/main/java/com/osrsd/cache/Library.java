@@ -21,24 +21,27 @@ public class Library {
 
     /**
      * Gets raw byte data from the cache library.
-     * This is annotated with {@link Synchronized} due to some sort of problem with multiple threads accessing the library simultaneously.
      *
      * @param indexId   The indexId to read from the cache library.
      * @param archiveId The archiveId to read from the indexId.
-     * @param fileId  The file to read from the archiveId.
+     * @param fileId    The file to read from the archiveId.
      * @return The raw byte data.
      */
-    @Synchronized
     public byte[] data(final int indexId, final int archiveId, final int fileId) {
-        Index index = cacheLibrary.index(indexId);
-        index.cache();
-        Archive archive = index.archive(archiveId);
+        Archive archive = index(indexId).archive(archiveId);
         if (archive == null) {
             throw new RuntimeException(String.format("Archive could not be grabbed at %s with id %s.", indexId, archiveId));
         }
         return Objects.requireNonNull(archive.file(fileId)).getData();
     }
 
+    /**
+     * Grabs a {@link Index} with the following id.
+     * This is annotated with {@link Synchronized} due to some sort of problem with multiple threads accessing the library simultaneously.
+     *
+     * @param indexId The indexId to read from the cache library.
+     * @return The index.
+     */
     @Synchronized
     public Index index(final int indexId) {
         Index index = cacheLibrary.index(indexId);

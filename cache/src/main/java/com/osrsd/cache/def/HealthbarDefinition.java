@@ -2,8 +2,6 @@ package com.osrsd.cache.def;
 
 import lombok.Data;
 
-import java.util.HashMap;
-
 @Data
 public final class HealthbarDefinition implements Definition {
 

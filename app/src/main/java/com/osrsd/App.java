@@ -30,11 +30,17 @@ public final class App {
 
     public static void main(String... args) {
         log.info("Executing...");
-        final File file = new File(String.format("%s/dump", baseDirectory()));
-
-        if (!file.exists() && !file.mkdir()) {
-            throw new RuntimeException(String.format("Could not create directory at %s.", file.getPath()));
+        final File base = new File(baseDirectory());
+        if (!base.exists() && !base.mkdir()) {
+            throw new RuntimeException(String.format("Could not create directory at %s.", base.getPath()));
         }
+
+        final File dump = new File(String.format("%s/dump", baseDirectory()));
+        if (!dump.exists() && !dump.mkdir()) {
+            throw new RuntimeException(String.format("Could not create directory at %s.", dump.getPath()));
+        }
+
+        //App really starts here.
         init();
     }
 
@@ -56,7 +62,9 @@ public final class App {
                 new PrintSoundEffects(library),
                 new PrintSprites(library),
                 new PrintTextures(library),
-                new PrintHealthBars(library)
+                new PrintHealthBars(library),
+                new PrintAreas(library),
+                new PrintScripts(library)
         );
 
         int cores = Runtime.getRuntime().availableProcessors();

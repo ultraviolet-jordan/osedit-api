@@ -7,7 +7,6 @@ import com.osrsd.cache.Library;
 import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.SpriteDefinition;
 import com.osrsd.cache.def.TextureDefinition;
-import com.osrsd.cache.provider.SpriteProvider;
 import com.osrsd.cache.provider.TextureProvider;
 import com.osrsd.cache.util.Serializable;
 
