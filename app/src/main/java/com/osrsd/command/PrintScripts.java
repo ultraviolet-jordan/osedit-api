@@ -2,7 +2,6 @@ package com.osrsd.command;
 
 import com.osrsd.App;
 import com.osrsd.cache.Library;
-import com.osrsd.cache.loader.AreaLoader;
 import com.osrsd.cache.loader.ScriptLoader;
 import com.osrsd.command.util.Printer;
 import lombok.AllArgsConstructor;

@@ -2,7 +2,6 @@ package com.osrsd.cache.def;
 
 import lombok.Data;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Data

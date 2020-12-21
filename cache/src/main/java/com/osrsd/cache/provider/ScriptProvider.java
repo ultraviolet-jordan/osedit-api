@@ -3,13 +3,11 @@ package com.osrsd.cache.provider;
 import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.ScriptDefinition;
 import com.osrsd.cache.util.ByteBufferExt;
-import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
 public final class ScriptProvider {
 
     static final int SCONST = 3;
