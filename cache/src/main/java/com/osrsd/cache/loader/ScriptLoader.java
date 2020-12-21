@@ -4,8 +4,8 @@ import com.displee.cache.index.Index;
 import com.osrsd.cache.Indexes;
 import com.osrsd.cache.Library;
 import com.osrsd.cache.def.Definition;
-import com.osrsd.cache.def.SpriteDefinition;
-import com.osrsd.cache.provider.SpriteProvider;
+import com.osrsd.cache.def.ScriptDefinition;
+import com.osrsd.cache.provider.ScriptProvider;
 import com.osrsd.cache.util.Serializable;
 
 import java.nio.ByteBuffer;
@@ -13,20 +13,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SpriteLoader implements Loader {
+public class ScriptLoader implements Loader {
 
     @Override
     public Serializable load(Library library) {
-        Index index = library.index(Indexes.SPRITES);
+        Index index = library.index(Indexes.SCRIPTS);
 
         List<Definition> definitions = new ArrayList<>(index.archives().length);
         Arrays.stream(index.archives()).forEach(archive -> {
             byte[] data = library.data(index.getId(), archive.getId(), 0);
             if (data != null) {
-                definitions.add(SpriteProvider.decode(ByteBuffer.wrap(data), new SpriteDefinition(archive.getId())));
+                definitions.add(ScriptProvider.decode(ByteBuffer.wrap(data), new ScriptDefinition(archive.getId())));
             }
         });
-        return new Serializable(this, definitions, "/sprites");
+        return new Serializable(this, definitions, "/scripts");
     }
 
 }

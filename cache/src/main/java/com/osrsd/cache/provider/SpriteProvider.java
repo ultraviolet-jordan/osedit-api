@@ -3,7 +3,6 @@ package com.osrsd.cache.provider;
 import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.SpriteDefinition;
 import com.osrsd.cache.util.ByteBufferExt;
-import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.image.BufferedImage;

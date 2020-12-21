@@ -1,9 +1,13 @@
 package com.osrsd.cache;
 
 import com.displee.cache.CacheLibrary;
+import com.displee.cache.index.Index;
+import com.displee.cache.index.archive.Archive;
 import lombok.Synchronized;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Objects;
 
 @Slf4j
 @Value
@@ -17,16 +21,32 @@ public class Library {
 
     /**
      * Gets raw byte data from the cache library.
-     * This is annotated with {@link Synchronized} due to some sort of problem with multiple threads accessing the library simultaneously.
      *
-     * @param index   The index to read from the cache library.
-     * @param archive The archive to read from the index.
-     * @param fileId  The file to read from the archive.
+     * @param indexId   The indexId to read from the cache library.
+     * @param archiveId The archiveId to read from the indexId.
+     * @param fileId    The file to read from the archiveId.
      * @return The raw byte data.
      */
+    public byte[] data(final int indexId, final int archiveId, final int fileId) {
+        Archive archive = index(indexId).archive(archiveId);
+        if (archive == null) {
+            throw new RuntimeException(String.format("Archive could not be grabbed at %s with id %s.", indexId, archiveId));
+        }
+        return Objects.requireNonNull(archive.file(fileId)).getData();
+    }
+
+    /**
+     * Grabs a {@link Index} with the following id.
+     * This is annotated with {@link Synchronized} due to some sort of problem with multiple threads accessing the library simultaneously.
+     *
+     * @param indexId The indexId to read from the cache library.
+     * @return The index.
+     */
     @Synchronized
-    public byte[] data(final int index, final int archive, final int fileId) {
-        return cacheLibrary.data(index, archive, fileId);
+    public Index index(final int indexId) {
+        Index index = cacheLibrary.index(indexId);
+        index.cache();
+        return index;
     }
 
 }

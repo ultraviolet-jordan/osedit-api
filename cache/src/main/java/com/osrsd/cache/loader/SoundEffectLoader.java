@@ -17,7 +17,7 @@ public class SoundEffectLoader implements Loader {
 
     @Override
     public Serializable load(Library library) {
-        Index index = library.getCacheLibrary().index(Indexes.SOUND_EFFECTS);
+        Index index = library.index(Indexes.SOUND_EFFECTS);
 
         List<Definition> definitions = new ArrayList<>(index.archives().length);
         Arrays.stream(index.archives()).forEach(archive -> {
