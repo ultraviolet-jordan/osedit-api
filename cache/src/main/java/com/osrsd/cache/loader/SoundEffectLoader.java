@@ -12,6 +12,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class SoundEffectLoader implements Loader {
 
@@ -21,7 +22,7 @@ public class SoundEffectLoader implements Loader {
 
         List<Definition> definitions = new ArrayList<>(index.archives().length);
         Arrays.stream(index.archives()).forEach(archive -> {
-            byte[] data = library.data(index.getId(), archive.getId(), 0);
+            byte[] data = Objects.requireNonNull(archive.first()).getData();
             if (data != null) {
                 definitions.add(SoundEffectProvider.decode(ByteBuffer.wrap(data), new SoundEffectDefinition(archive.getId())));
             }

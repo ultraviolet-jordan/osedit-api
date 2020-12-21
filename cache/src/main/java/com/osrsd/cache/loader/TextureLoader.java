@@ -14,6 +14,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class TextureLoader implements Loader {
 
@@ -25,7 +26,7 @@ public class TextureLoader implements Loader {
         assert archive != null;
         List<TextureDefinition> textures = new ArrayList<>(archive.fileIds().length);
         Arrays.stream(archive.fileIds()).forEach(fileId -> {
-            byte[] data = library.data(index.getId(), archive.getId(), fileId);
+            byte[] data = Objects.requireNonNull(archive.file(fileId)).getData();
             if (data != null) {
                 textures.add((TextureDefinition) TextureProvider.decode(ByteBuffer.wrap(data), new TextureDefinition(fileId)));
             }
@@ -33,14 +34,12 @@ public class TextureLoader implements Loader {
 
         Index spriteIndex = library.index(Indexes.SPRITES);
         List<Definition> definitions = new ArrayList<>(textures.size());
-        textures.forEach(definition -> {
-            Arrays.stream(definition.getFileIds()).forEach(fileId -> {
-                byte[] data = library.data(spriteIndex.getId(), fileId, 0);
-                if (data != null) {
-                    definitions.add(TextureProvider.decodeAsSprite(ByteBuffer.wrap(data), new SpriteDefinition(fileId)));
-                }
-            });
-        });
+        textures.forEach(definition -> Arrays.stream(definition.getFileIds()).forEach(archiveId -> {
+            byte[] data = Objects.requireNonNull(Objects.requireNonNull(spriteIndex.archive(archiveId)).first()).getData();
+            if (data != null) {
+                definitions.add(TextureProvider.decodeAsSprite(ByteBuffer.wrap(data), new SpriteDefinition(archiveId)));
+            }
+        }));
         return new Serializable(this, definitions, "/textures");
     }
 

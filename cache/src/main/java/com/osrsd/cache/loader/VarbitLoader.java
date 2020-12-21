@@ -14,6 +14,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class VarbitLoader implements Loader {
 
@@ -25,7 +26,7 @@ public class VarbitLoader implements Loader {
         assert archive != null;
         List<Definition> definitions = new ArrayList<>(archive.fileIds().length);
         Arrays.stream(archive.fileIds()).forEach(fileId -> {
-            byte[] data = library.data(index.getId(), archive.getId(), fileId);
+            byte[] data = Objects.requireNonNull(archive.file(fileId)).getData();
             if (data != null) {
                 definitions.add(VarbitProvider.decode(ByteBuffer.wrap(data), new VarbitDefinition(fileId)));
             }
