@@ -1,21 +1,20 @@
 package com.osrsd.command;
 
-import com.osrsd.App;
-import com.osrsd.cache.Library;
-import com.osrsd.cache.loader.HealthBarLoader;
-import com.osrsd.command.util.Printer;
 import lombok.AllArgsConstructor;
+
+import java.util.concurrent.CountDownLatch;
 
 @AllArgsConstructor
 public class PrintHealthBars implements Runnable {
 
-    private final Library library;
+    private final CountDownLatch latch;
 
     @Override
     public void run() {
         long start = System.currentTimeMillis();
-        Printer.printContent(new HealthBarLoader().load(library));
-        App.prompt(PrintHealthBars.class, start);
+//        Library.cachePrintable(HealthbarDefinition.class, new HealthBarLoader().load().getDefinitions());
+//        App.prompt(PrintHealthBars.class, start);
+        latch.countDown();
     }
 
 }

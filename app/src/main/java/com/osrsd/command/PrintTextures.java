@@ -1,21 +1,20 @@
 package com.osrsd.command;
 
-import com.osrsd.App;
-import com.osrsd.cache.Library;
-import com.osrsd.cache.loader.TextureLoader;
-import com.osrsd.command.util.Printer;
 import lombok.AllArgsConstructor;
+
+import java.util.concurrent.CountDownLatch;
 
 @AllArgsConstructor
 public class PrintTextures implements Runnable {
 
-    private final Library library;
+    private final CountDownLatch latch;
 
     @Override
     public void run() {
         long start = System.currentTimeMillis();
-        Printer.printImage(new TextureLoader().load(library));
-        App.prompt(PrintTextures.class, start);
+//        Printer.printImage(new TextureLoader().load());
+//        App.prompt(PrintTextures.class, start);
+        latch.countDown();
     }
 
 }

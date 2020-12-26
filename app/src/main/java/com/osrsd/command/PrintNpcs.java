@@ -1,21 +1,20 @@
 package com.osrsd.command;
 
-import com.osrsd.App;
-import com.osrsd.cache.Library;
-import com.osrsd.cache.loader.NpcLoader;
-import com.osrsd.command.util.Printer;
 import lombok.AllArgsConstructor;
+
+import java.util.concurrent.CountDownLatch;
 
 @AllArgsConstructor
 public class PrintNpcs implements Runnable {
 
-    private final Library library;
+    private final CountDownLatch latch;
 
     @Override
     public void run() {
         long start = System.currentTimeMillis();
-        Printer.printContent(new NpcLoader().load(library));
-        App.prompt(PrintNpcs.class, start);
+//        Library.cachePrintable(NpcDefinition.class, new NpcLoader().load().getDefinitions());
+//        App.prompt(PrintNpcs.class, start);
+        latch.countDown();
     }
 
 }

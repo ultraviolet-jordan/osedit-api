@@ -1,21 +1,20 @@
 package com.osrsd.command;
 
-import com.osrsd.App;
-import com.osrsd.cache.Library;
-import com.osrsd.cache.loader.SequenceLoader;
-import com.osrsd.command.util.Printer;
 import lombok.AllArgsConstructor;
+
+import java.util.concurrent.CountDownLatch;
 
 @AllArgsConstructor
 public class PrintSequences implements Runnable {
 
-    private final Library library;
+    private final CountDownLatch latch;
 
     @Override
     public void run() {
         long start = System.currentTimeMillis();
-        Printer.printContent(new SequenceLoader().load(library));
-        App.prompt(PrintSequences.class, start);
+//        Library.cachePrintable(SequenceDefinition.class, new SequenceLoader().load().getDefinitions());
+//        App.prompt(PrintSequences.class, start);
+        latch.countDown();
     }
 
 }

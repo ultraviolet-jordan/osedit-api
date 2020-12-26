@@ -1,21 +1,20 @@
 package com.osrsd.command;
 
-import com.osrsd.App;
-import com.osrsd.cache.Library;
-import com.osrsd.cache.loader.ScriptLoader;
-import com.osrsd.command.util.Printer;
 import lombok.AllArgsConstructor;
+
+import java.util.concurrent.CountDownLatch;
 
 @AllArgsConstructor
 public class PrintScripts implements Runnable {
 
-    private final Library library;
+    private final CountDownLatch latch;
 
     @Override
     public void run() {
         long start = System.currentTimeMillis();
-        Printer.printContent(new ScriptLoader().load(library));
-        App.prompt(PrintScripts.class, start);
+//        Library.cachePrintable(ScriptDefinition.class, new ScriptLoader().load().getDefinitions());
+//        App.prompt(PrintScripts.class, start);
+        latch.countDown();
     }
 
 }

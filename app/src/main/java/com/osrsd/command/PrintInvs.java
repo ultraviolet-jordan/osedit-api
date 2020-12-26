@@ -1,21 +1,20 @@
 package com.osrsd.command;
 
-import com.osrsd.App;
-import com.osrsd.cache.Library;
-import com.osrsd.cache.loader.InvLoader;
-import com.osrsd.command.util.Printer;
 import lombok.AllArgsConstructor;
+
+import java.util.concurrent.CountDownLatch;
 
 @AllArgsConstructor
 public class PrintInvs implements Runnable {
 
-    private final Library library;
+    private final CountDownLatch latch;
 
     @Override
     public void run() {
         long start = System.currentTimeMillis();
-        Printer.printContent(new InvLoader().load(library));
-        App.prompt(PrintInvs.class, start);
+//        Library.cachePrintable(InvDefinition.class, new InvLoader().load().getDefinitions());
+//        App.prompt(PrintInvs.class, start);
+        latch.countDown();
     }
 
 }

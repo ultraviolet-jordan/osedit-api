@@ -1,21 +1,20 @@
 package com.osrsd.command;
 
-import com.osrsd.App;
-import com.osrsd.cache.Library;
-import com.osrsd.cache.loader.AreaLoader;
-import com.osrsd.command.util.Printer;
 import lombok.AllArgsConstructor;
+
+import java.util.concurrent.CountDownLatch;
 
 @AllArgsConstructor
 public class PrintAreas implements Runnable {
 
-    private final Library library;
+    private final CountDownLatch latch;
 
     @Override
     public void run() {
         long start = System.currentTimeMillis();
-        Printer.printContent(new AreaLoader().load(library));
-        App.prompt(PrintAreas.class, start);
+//        Library.INSTANCE.cachePrintable(AreaDefinition.class, new AreaLoader().load().getDefinitions());
+//        App.prompt(PrintAreas.class, start);
+        latch.countDown();
     }
 
 }

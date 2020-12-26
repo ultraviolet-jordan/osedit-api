@@ -2,11 +2,11 @@ package com.osrsd.command.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.osrsd.App;
 import com.osrsd.cache.def.SoundEffectDefinition;
 import com.osrsd.cache.def.SpriteDefinition;
 import com.osrsd.cache.provider.SoundEffectProvider;
 import com.osrsd.cache.util.Serializable;
+import com.osrsd.spring.App;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
@@ -28,7 +28,7 @@ public final class Printer {
      * @param serializable The data wrapped in a {@link Serializable}.
      */
     public static void printContent(Serializable serializable) {
-        final File file = new File(String.format("%s/%s.json", String.format("%s/dump", App.baseDirectory()), serializable.getPath()));
+        final File file = new File(String.format("%s/%s.json", String.format("%s/dump", App.Companion.baseDirectory()), serializable.getPath()));
         if (file.exists() && !file.delete()) {
             throw new RuntimeException(String.format("Could not delete file at %s.", file.getPath()));
         }
@@ -46,7 +46,7 @@ public final class Printer {
      * @param serializable The data wrapped in a {@link Serializable}.
      */
     public static void printImage(Serializable serializable) {
-        final File file = new File(String.format("%s/dump%s", App.baseDirectory(), serializable.getPath()));
+        final File file = new File(String.format("%s/dump%s", App.Companion.baseDirectory(), serializable.getPath()));
         if (!file.exists() && !file.mkdir()) {
             throw new RuntimeException(String.format("Could not create directory at %s.", file.getPath()));
         }
@@ -73,7 +73,7 @@ public final class Printer {
      * @param serializable The data wrapped in a {@link Serializable}.
      */
     public static void printAudio(Serializable serializable) {
-        final File file = new File(String.format("%s/dump%s", App.baseDirectory(), serializable.getPath()));
+        final File file = new File(String.format("%s/dump%s", App.Companion.baseDirectory(), serializable.getPath()));
         if (!file.exists() && !file.mkdir()) {
             throw new RuntimeException(String.format("Could not create directory at %s.", file.getPath()));
         }
