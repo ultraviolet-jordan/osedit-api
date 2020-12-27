@@ -1,6 +1,7 @@
 package com.osrsd.cache.def;
 
 import com.osrsd.cache.def.sound.AudioInstrument;
+import com.osrsd.spring.domain.Definition;
 import lombok.Data;
 
 @Data

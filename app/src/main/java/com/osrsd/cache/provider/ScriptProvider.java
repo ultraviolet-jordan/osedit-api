@@ -1,8 +1,8 @@
 package com.osrsd.cache.provider;
 
-import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.ScriptDefinition;
 import com.osrsd.cache.util.ByteBufferExt;
+import com.osrsd.spring.domain.Definition;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public final class ScriptProvider {
         definition.setIntStackCount(intStackCount);
         definition.setStringStackCount(stringStackCount);
         buffer.position(0);
-        ByteBufferExt.getStringOrNull(buffer);
+        ByteBufferExt.INSTANCE.getStringOrNull(buffer);
         int[] instructions = new int[numOpcodes];
         int[] intOperands = new int[numOpcodes];
         String[] stringOperands = new String[numOpcodes];
@@ -56,7 +56,7 @@ public final class ScriptProvider {
         for (int i = 0; buffer.position() < endIdx; instructions[i++] = opcode) {
             opcode = buffer.getShort() & 0xffff;
             if (opcode == SCONST) {
-                stringOperands[i] = ByteBufferExt.getString(buffer);
+                stringOperands[i] = ByteBufferExt.INSTANCE.getString(buffer);
             } else if (opcode < 100 && opcode != RETURN && opcode != POP_INT && opcode != POP_STRING) {
                 intOperands[i] = buffer.getInt();
             } else {

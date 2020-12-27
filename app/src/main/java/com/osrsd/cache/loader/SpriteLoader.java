@@ -1,10 +1,10 @@
 package com.osrsd.cache.loader;
 
 import com.displee.cache.index.Index;
-import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.SpriteDefinition;
 import com.osrsd.cache.provider.SpriteProvider;
 import com.osrsd.cache.util.Serializable;
+import com.osrsd.spring.domain.Definition;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;

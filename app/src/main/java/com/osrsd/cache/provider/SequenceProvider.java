@@ -1,8 +1,8 @@
 package com.osrsd.cache.provider;
 
-import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.SequenceDefinition;
 import com.osrsd.cache.util.ByteBufferExt;
+import com.osrsd.spring.domain.Definition;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
@@ -70,7 +70,7 @@ public final class SequenceProvider {
                 length = buffer.get() & 0xff;
                 definition.setFrameSounds(new int[length]);
                 for (index = 0; index < length; ++index) {
-                    definition.getFrameSounds()[index] = ByteBufferExt.getMedium(buffer);
+                    definition.getFrameSounds()[index] = ByteBufferExt.INSTANCE.getMedium(buffer);
                 }
             } else {
                 log.warn(String.format("Unhandled definition opcode with id: %s.", opcode));

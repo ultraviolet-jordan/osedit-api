@@ -1,13 +1,9 @@
 package com.osrsd.spring.domain
 
-import com.osrsd.cache.def.Definition
-import javax.persistence.ElementCollection
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.ManyToOne
+import javax.persistence.*
 
 @Entity
-data class ItemDefinition(@Id val id: Int? = 0) : Definition {
+data class ItemDefinition(@Id private val id: Int? = 0) : Definition {
     var name: String = "null"
     var resizeX: Int = 128
     var resizeY: Int = 128
@@ -31,8 +27,10 @@ data class ItemDefinition(@Id val id: Int? = 0) : Definition {
     var contrast: Int = 0
     var countCo: IntArray? = null
     var countObj: IntArray? = null
-    var options: Array<String?> = arrayOf(null, null, "Take", null, null)
-    var interfaceOptions: Array<String?> = arrayOf(null, null, null, null, "Drop")
+    @ElementCollection
+    var options = mutableListOf(null, null, "Take", null, "Drop")
+    @ElementCollection
+    var interfaceOptions = mutableListOf(null, null, null, null, "Drop")
     var maleModel0: Int = -1
     var maleModel1: Int = -1
     var maleModel2: Int = -1

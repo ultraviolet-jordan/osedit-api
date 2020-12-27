@@ -1,8 +1,8 @@
 package com.osrsd.cache.provider;
 
-import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.ObjectDefinition;
 import com.osrsd.cache.util.ByteBufferExt;
+import com.osrsd.spring.domain.Definition;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
@@ -31,7 +31,7 @@ public final class ObjectProvider {
                     definition.setObjectModels(objectModels);
                 }
             } else if (opcode == 2) {
-                definition.setName(ByteBufferExt.getString(buffer));
+                definition.setName(ByteBufferExt.INSTANCE.getString(buffer));
             } else if (opcode == 5) {
                 int length = buffer.get() & 0xff;
                 if (length > 0) {
@@ -70,7 +70,7 @@ public final class ObjectProvider {
                 definition.setContrast(buffer.get() * 25);
             } else if (opcode >= 30 && opcode < 35) {
                 String[] actions = definition.getActions();
-                actions[opcode - 30] = ByteBufferExt.getString(buffer);
+                actions[opcode - 30] = ByteBufferExt.INSTANCE.getString(buffer);
                 if (actions[opcode - 30].equalsIgnoreCase("Hidden")) {
                     actions[opcode - 30] = null;
                 }
@@ -183,10 +183,10 @@ public final class ObjectProvider {
                 int length = buffer.get() & 0xff;
                 for (int i = 0; i < length; i++) {
                     boolean isString = (buffer.get() & 0xff) == 1;
-                    int key = ByteBufferExt.getMedium(buffer);
+                    int key = ByteBufferExt.INSTANCE.getMedium(buffer);
                     Object value;
                     if (isString) {
-                        value = ByteBufferExt.getString(buffer);
+                        value = ByteBufferExt.INSTANCE.getString(buffer);
                     } else {
                         value = buffer.getInt();
                     }

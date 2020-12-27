@@ -1,9 +1,9 @@
 package com.osrsd.cache.provider;
 
-import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.SpriteDefinition;
 import com.osrsd.cache.def.TextureDefinition;
 import com.osrsd.cache.util.ByteBufferExt;
+import com.osrsd.spring.domain.Definition;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.image.BufferedImage;
@@ -37,7 +37,7 @@ public final class TextureProvider {
         buffer.position(buffer.limit() - spriteCount * 8 - 7 - (palette.length - 1) * 3);
         palette[0] = 0;
         IntStream.range(1, palette.length).forEach(index -> {
-            palette[index] = ByteBufferExt.getMedium(buffer);
+            palette[index] = ByteBufferExt.INSTANCE.getMedium(buffer);
             if (palette[index] == 0) {
                 palette[index] = 1;
             }

@@ -1,6 +1,9 @@
 package com.osrsd.spring
 
+import com.osrsd.command.PrintEnums
+import com.osrsd.command.PrintHealthBars
 import com.osrsd.command.PrintItems
+import com.osrsd.command.PrintNpcs
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -20,12 +23,12 @@ open class App {
             properties.load(it)
         }
 
-        val latch = CountDownLatch(1)
+        val latch = CountDownLatch(4)
         val commands = listOf(
                 //PrintInvs(latch),
                 //PrintObjects(latch),
-                //PrintEnums(latch),
-                //PrintNpcs(latch),
+                PrintEnums(latch),
+                PrintNpcs(latch),
                 PrintItems(latch),
                 //PrintParams(latch),
                 //PrintSequences(latch),
@@ -34,7 +37,7 @@ open class App {
                 //new PrintSoundEffects(latch),
                 //new PrintSprites(latch),
                 //new PrintTextures(latch),
-                //PrintHealthBars(latch),
+                PrintHealthBars(latch),
                 //PrintAreas(latch),
                 //PrintScripts(latch)
         )

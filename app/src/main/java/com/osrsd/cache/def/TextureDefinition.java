@@ -1,5 +1,6 @@
 package com.osrsd.cache.def;
 
+import com.osrsd.spring.domain.Definition;
 import lombok.Data;
 
 @Data

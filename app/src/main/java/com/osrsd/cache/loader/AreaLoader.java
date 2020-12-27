@@ -4,9 +4,9 @@ import com.displee.cache.index.Index;
 import com.displee.cache.index.archive.Archive;
 import com.osrsd.cache.Configs;
 import com.osrsd.cache.def.AreaDefinition;
-import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.provider.AreaProvider;
 import com.osrsd.cache.util.Serializable;
+import com.osrsd.spring.domain.Definition;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;

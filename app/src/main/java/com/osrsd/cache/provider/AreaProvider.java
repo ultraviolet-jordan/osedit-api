@@ -1,8 +1,8 @@
 package com.osrsd.cache.provider;
 
 import com.osrsd.cache.def.AreaDefinition;
-import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.util.ByteBufferExt;
+import com.osrsd.spring.domain.Definition;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
@@ -22,11 +22,11 @@ public final class AreaProvider {
             } else if (opcode == 2) {
                 definition.setField3294(buffer.getShort() & 0xffff);
             } else if (opcode == 3) {
-                definition.setName(ByteBufferExt.getString(buffer));
+                definition.setName(ByteBufferExt.INSTANCE.getString(buffer));
             } else if (opcode == 4) {
-                definition.setField3296(ByteBufferExt.getMedium(buffer));
+                definition.setField3296(ByteBufferExt.INSTANCE.getMedium(buffer));
             } else if (opcode == 5) {
-                ByteBufferExt.getMedium(buffer);
+                ByteBufferExt.INSTANCE.getMedium(buffer);
             } else if (opcode == 6) {
                 definition.setField3310(buffer.get() & 0xff);
             } else if (opcode == 7) {
@@ -34,7 +34,7 @@ public final class AreaProvider {
             } else if (opcode == 8) {
                 buffer.get();
             } else if (opcode >= 10 && opcode <= 14) {
-                definition.getField3298()[opcode - 10] = ByteBufferExt.getString(buffer);
+                definition.getField3298()[opcode - 10] = ByteBufferExt.INSTANCE.getString(buffer);
             } else if (opcode == 15) {
                 int var3 = buffer.get() & 0xff;
                 definition.setField3300(new int[var3 * 2]);
@@ -54,7 +54,7 @@ public final class AreaProvider {
                     definition.getField3309()[var5] = buffer.get();
                 }
             } else if (opcode == 17) {
-                definition.setField3308(ByteBufferExt.getString(buffer));
+                definition.setField3308(ByteBufferExt.INSTANCE.getString(buffer));
             } else if (opcode == 18) {
                 buffer.getShort();
             } else if (opcode == 19) {

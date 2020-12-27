@@ -2,9 +2,8 @@ package com.osrsd.cache
 
 import com.displee.cache.CacheLibrary
 import com.displee.cache.index.Index
-import com.osrsd.cache.def.Definition
 import com.osrsd.spring.App
-import com.osrsd.spring.domain.ItemDefinition
+import com.osrsd.spring.domain.*
 import java.util.concurrent.ConcurrentHashMap
 
 object Library {
@@ -20,6 +19,17 @@ object Library {
     private val definitions: ConcurrentHashMap<Class<out Definition>, List<Definition>> = ConcurrentHashMap()
 
     /**
+     * Gets the raw index from the cache library.
+     * This is annotated with synchronized because of a weird issue with multiple threads accessing the library simultaneously.
+     */
+    @Synchronized
+    fun index(indexId: Int): Index {
+        val index: Index = cacheLibrary.index(indexId)
+        index.cache()
+        return index
+    }
+
+    /**
      * Stores a provided list of definitions.
      */
     fun store(clazz: Class<out Definition>, list: List<Definition>) {
@@ -29,19 +39,29 @@ object Library {
     /**
      * Gets the item definitions.
      */
-    fun items(): List<Definition>? {
-        return definitions[ItemDefinition::class.java]
+    fun items(): List<ItemDefinition>? {
+        return definitions[ItemDefinition::class.java]?.filterIsInstance<ItemDefinition>()
     }
 
     /**
-     * Gets the raw index from the cache library.
-     * This is annotated with synchronized because of a weird issue with multiple threads accessing the library simultaneously.
+     * Gets the npc definitions.
      */
-    @Synchronized
-    fun index(indexId: Int): Index {
-        val index: Index = cacheLibrary.index(indexId)
-        index.cache()
-        return index
+    fun npcs(): List<NpcDefinition>? {
+        return definitions[NpcDefinition::class.java]?.filterIsInstance<NpcDefinition>()
+    }
+
+    /**
+     * Gets the enum definitions.
+     */
+    fun enums(): List<EnumDefinition>? {
+        return definitions[EnumDefinition::class.java]?.filterIsInstance<EnumDefinition>()
+    }
+
+    /**
+     * Gets the health bar definitions.
+     */
+    fun healthBars(): List<HealthBarDefinition>? {
+        return definitions[HealthBarDefinition::class.java]?.filterIsInstance<HealthBarDefinition>()
     }
 
 }

@@ -1,6 +1,6 @@
 package com.osrsd.cache.provider
 
-import com.osrsd.cache.def.Definition
+import com.osrsd.spring.domain.Definition
 import com.osrsd.cache.util.ByteBufferExt
 import com.osrsd.spring.domain.ItemDefinition
 import org.slf4j.Logger

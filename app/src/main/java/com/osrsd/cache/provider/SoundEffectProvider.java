@@ -1,8 +1,8 @@
 package com.osrsd.cache.provider;
 
-import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.SoundEffectDefinition;
 import com.osrsd.cache.def.sound.AudioInstrument;
+import com.osrsd.spring.domain.Definition;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;

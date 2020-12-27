@@ -1,6 +1,6 @@
 package com.osrsd.cache.util
 
-import com.osrsd.cache.def.Definition
+import com.osrsd.spring.domain.Definition
 import com.osrsd.cache.loader.Loader
 
 data class Serializable(

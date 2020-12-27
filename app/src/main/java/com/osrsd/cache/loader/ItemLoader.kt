@@ -13,8 +13,8 @@ class ItemLoader : Loader {
 
     override fun load(): Serializable {
         val archive: Archive = Library.index(Indexes.CONFIG).archive(Configs.ITEMS)!!
-        val definitions = archive.fileIds().map { member ->
-            ItemProvider.decode(ByteBuffer.wrap(archive.file(member)?.data), ItemDefinition(member))
+        val definitions = archive.fileIds().map {
+            ItemProvider.decode(ByteBuffer.wrap(archive.file(it)?.data), ItemDefinition(it))
         }
         return Serializable(this, definitions, "/items")
     }

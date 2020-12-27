@@ -96,18 +96,18 @@ public final class AudioInstrument {
         }
 
         for (int var3 = 0; var3 < 10; ++var3) {
-            int var4 = ByteBufferExt.getUnsignedShortSmart(buffer);
+            int var4 = ByteBufferExt.INSTANCE.getUnsignedShortSmart(buffer);
             if (var4 == 0) {
                 break;
             }
 
             oscillatorVolume[var3] = var4;
-            oscillatorPitch[var3] = ByteBufferExt.getShortSmart(buffer);
-            oscillatorDelays[var3] = ByteBufferExt.getUnsignedShortSmart(buffer);
+            oscillatorPitch[var3] = ByteBufferExt.INSTANCE.getShortSmart(buffer);
+            oscillatorDelays[var3] = ByteBufferExt.INSTANCE.getUnsignedShortSmart(buffer);
         }
 
-        delayTime = ByteBufferExt.getUnsignedShortSmart(buffer);
-        delayDecay = ByteBufferExt.getUnsignedShortSmart(buffer);
+        delayTime = ByteBufferExt.INSTANCE.getUnsignedShortSmart(buffer);
+        delayDecay = ByteBufferExt.INSTANCE.getUnsignedShortSmart(buffer);
         duration = buffer.getShort() & 0xffff;
         offset = buffer.getShort() & 0xffff;
         filter = new Synthesizer();

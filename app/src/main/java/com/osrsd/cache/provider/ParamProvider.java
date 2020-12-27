@@ -1,8 +1,8 @@
 package com.osrsd.cache.provider;
 
-import com.osrsd.cache.def.Definition;
 import com.osrsd.cache.def.ParamDefinition;
 import com.osrsd.cache.util.ByteBufferExt;
+import com.osrsd.spring.domain.Definition;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
@@ -24,7 +24,7 @@ public final class ParamProvider {
             } else if (opcode == 4) {
                 definition.setMembers(false);
             } else if (opcode == 5) {
-                definition.setDefaultString(ByteBufferExt.getString(buffer));
+                definition.setDefaultString(ByteBufferExt.INSTANCE.getString(buffer));
             } else {
                 log.warn(String.format("Unhandled definition opcode with id: %s.", opcode));
             }
