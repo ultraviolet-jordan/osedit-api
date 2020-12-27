@@ -1,30 +1,47 @@
 plugins {
-    id 'java'
     id 'application'
+    id 'org.springframework.boot' version '2.3.3.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.30-M1'
 }
 
-group 'com.osrsd'
+group 'com.osedit'
 version '1.0'
+
+application {
+    mainClassName = "com.osedit.MainKt"
+}
 
 repositories {
     mavenCentral()
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
 }
 
 dependencies {
-    compile project(':cache')
-
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.4.21'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation 'com.displee:rs-cache-library:6.6'
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-    compileOnly 'org.projectlombok:lombok:1.18.16'
-    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+    runtime 'com.h2database:h2'
 
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
-    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-application {
-    mainClassName = "com.osrsd.App"
+test {
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
