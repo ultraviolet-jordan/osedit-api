@@ -35,6 +35,7 @@ open class App {
                 CacheVarbits(latch),
                 CacheHealthBars(latch),
                 CacheAreas(latch),
+                CacheOverlays(latch)
         )
         val cores = Runtime.getRuntime().availableProcessors()
         if (cores > 4) {

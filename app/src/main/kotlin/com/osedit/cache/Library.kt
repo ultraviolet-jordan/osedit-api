@@ -71,6 +71,10 @@ object Library {
         return definitions[InvDefinition::class.java]?.filterIsInstance<InvDefinition>()
     }
 
+    fun overlays(): List<OverlayDefinition>? {
+        return definitions[OverlayDefinition::class.java]?.filterIsInstance<OverlayDefinition>()
+    }
+
     /**
      * Gets the health bar definitions.
      */
