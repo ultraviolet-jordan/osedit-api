@@ -4,22 +4,16 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-data class OverlayDefinition(@Id private val id: Int? = 0): Definition {
+data class OverlayDefinition(@Id val id: Int? = 0): Definition {
     var rgbColor: Int = 0
     var secondaryRgbColor: Int = 0
     var textureId: Int = -1
     var hideUnderlay: Boolean = true
-    @Transient
     var hue: Int? = null
-    @Transient
     var saturation: Int = 0
-    @Transient
     var lightness: Int = 0
-    @Transient
     var otherHue: Int = 0
-    @Transient
     var otherSaturation: Int = 0
-    @Transient
     var otherLightness: Int = 0
 
     fun calculateHsl() {

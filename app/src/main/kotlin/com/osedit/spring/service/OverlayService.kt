@@ -36,7 +36,7 @@ class OverlayService(@Autowired private val overlayRepository: OverlayRepository
         }
     }
 
-    fun getOverlayPNG(overlayId: Int, width: Int = 50, height: Int = 50): Optional<ByteArray>? {
+    fun getOverlayPNG(overlayId: Int, width: Int, height: Int): Optional<ByteArray>? {
         return with(overlayRepository) {
             findById(overlayId)
         }.map {
