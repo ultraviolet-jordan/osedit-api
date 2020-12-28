@@ -181,7 +181,26 @@ object ObjectProvider {
             else -> log.warn(String.format("Unhandled definition opcode with id: %s.", opcode))
         }
         while (true)
+        post(definition)
         return definition
+    }
+
+    private fun post(definition: ObjectDefinition) {
+        if (definition.wallOrDoor == -1) {
+            definition.wallOrDoor = 0
+            if (definition.objectModels != null && (definition.objectTypes == null || definition.objectTypes!![0] == 10)) {
+                definition.wallOrDoor = 1
+            }
+            for (it in 0..4) {
+                if (definition.actions[it] != null) {
+                    definition.wallOrDoor = 1
+                    break
+                }
+            }
+        }
+        if (definition.supportsItems == -1) {
+            definition.supportsItems = if (definition.interactType != 0) 1 else 0
+        }
     }
 
 }
