@@ -22,7 +22,7 @@ open class App {
         }
 
         //Latch is necessary.
-        val latch = CountDownLatch(11)
+        val latch = CountDownLatch(12)
         val commands = listOf(
                 CacheInvs(latch),
                 CacheObjects(latch),
