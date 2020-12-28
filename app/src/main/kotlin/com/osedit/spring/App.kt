@@ -22,7 +22,7 @@ open class App {
         }
 
         //Latch is necessary.
-        val latch = CountDownLatch(11)
+        val latch = CountDownLatch(12)
         val commands = listOf(
                 CacheInvs(latch),
                 CacheObjects(latch),
@@ -35,6 +35,7 @@ open class App {
                 CacheVarbits(latch),
                 CacheHealthBars(latch),
                 CacheAreas(latch),
+                CacheOverlays(latch)
         )
         val cores = Runtime.getRuntime().availableProcessors()
         if (cores > 4) {

@@ -3,5 +3,7 @@
 .gradle
 */build/
 app/dump/*
+189/dump/*
+189/*
 **/build/
 !gradle-wrapper.jar

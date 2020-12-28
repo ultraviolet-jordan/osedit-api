@@ -1,6 +1,7 @@
 package com.osedit.cache
 
 object Configs {
+    const val OVERLAYS = 4
     const val INVS = 5
     const val OBJECTS = 6
     const val ENUMS = 8
