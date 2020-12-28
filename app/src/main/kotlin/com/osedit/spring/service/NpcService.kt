@@ -5,6 +5,8 @@ import com.osedit.spring.domain.NpcDefinition
 import com.osedit.spring.dto.NpcSearchRequestDTO
 import com.osedit.spring.repository.NpcRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import java.util.*
 import javax.annotation.PostConstruct
@@ -31,9 +33,15 @@ class NpcService(@Autowired private val npcRepository: NpcRepository) {
         }
     }
 
-    fun searchNpcs(body: NpcSearchRequestDTO): List<NpcDefinition> {
-        return with(npcRepository) {
-            searchNpcs(body.searchText)
+    fun searchNpcs(request: NpcSearchRequestDTO): Page<NpcDefinition>? {
+        return if (request.searchText == null) {
+            with(npcRepository) {
+                findAll(PageRequest.of(request.skip, request.take))
+            }
+        } else {
+            with(npcRepository) {
+                searchNpcs(request.searchText, PageRequest.of(request.skip, request.take))
+            }
         }
     }
 }
