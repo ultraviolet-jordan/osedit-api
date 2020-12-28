@@ -12,15 +12,13 @@ object ParamProvider {
     private val log: Logger = LoggerFactory.getLogger(ParamProvider::class.java)
 
     fun decode(buffer: ByteBuffer, definition: ParamDefinition): Definition {
-        do {
-            when (val opcode: Int = buffer.get().toInt() and 0xff) {
-                1 -> definition.type = (buffer.get().toInt() and 0xff).toChar()
-                2 -> definition.defaultInt = buffer.int
-                4 -> definition.isMembers = false
-                5 -> definition.defaultString = ByteBufferExt.getString(buffer)
-                0 -> break
-                else -> log.warn(String.format("Unhandled definition opcode with id: %s.", opcode))
-            }
+        do when (val opcode: Int = buffer.get().toInt() and 0xff) {
+            1 -> definition.type = (buffer.get().toInt() and 0xff).toChar()
+            2 -> definition.defaultInt = buffer.int
+            4 -> definition.isMembers = false
+            5 -> definition.defaultString = ByteBufferExt.getString(buffer)
+            0 -> break
+            else -> log.warn(String.format("Unhandled definition opcode with id: %s.", opcode))
         } while (true)
         return definition
     }

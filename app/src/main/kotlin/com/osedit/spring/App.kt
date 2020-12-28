@@ -15,7 +15,7 @@ open class App {
     /**
      * Starts the main application.
      */
-    fun boot(resource: String) {
+    fun boot() {
         val start: Long = System.currentTimeMillis()
         App::class.java.getResourceAsStream(resource).use {
             properties.load(it)
@@ -53,14 +53,19 @@ open class App {
 
     companion object {
         /**
-         * The main logger.
+         * The app properties resource path.
          */
-        private val log: Logger = LoggerFactory.getLogger(App::class.java)
+        const val resource: String = "/application.properties"
 
         /**
          * The application properties.
          */
         val properties = Properties()
+
+        /**
+         * The main logger.
+         */
+        private val log: Logger = LoggerFactory.getLogger(App::class.java)
 
         /**
          * The base directory for serializing data.

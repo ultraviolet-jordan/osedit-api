@@ -11,12 +11,10 @@ object InvProvider {
     private val log: Logger = LoggerFactory.getLogger(InvProvider::class.java)
 
     fun decode(buffer: ByteBuffer, definition: InvDefinition): Definition {
-        do {
-            when (val opcode: Int = buffer.get().toInt() and 0xff) {
-                2 -> definition.size = buffer.short.toInt() and 0xffff
-                0 -> break
-                else -> log.warn(String.format("Unhandled definition opcode with id: %s.", opcode))
-            }
+        do when (val opcode: Int = buffer.get().toInt() and 0xff) {
+            2 -> definition.size = buffer.short.toInt() and 0xffff
+            0 -> break
+            else -> log.warn(String.format("Unhandled definition opcode with id: %s.", opcode))
         } while (true)
         return definition
     }
