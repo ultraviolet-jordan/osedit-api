@@ -8,7 +8,7 @@ import java.nio.ByteBuffer
 
 object OverlayProvider {
 
-    private val log: Logger = LoggerFactory.getLogger(ItemProvider::class.java)
+    private val log: Logger = LoggerFactory.getLogger(OverlayProvider::class.java)
 
     fun decode(buffer: ByteBuffer, definition: OverlayDefinition): Definition {
         do {
