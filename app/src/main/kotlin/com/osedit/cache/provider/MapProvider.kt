@@ -10,8 +10,8 @@ import java.nio.ByteBuffer
 
 object MapProvider {
 
-    fun decode(buffer: ByteBuffer, definition: MapDefinition): Definition? {
-        var tiles: Array<Array<Array<MapTileDefinition?>>> = definition.tiles;
+    fun decode(buffer: ByteBuffer, definition: MapDefinition): Definition {
+        val tiles: Array<Array<Array<MapTileDefinition?>>> = definition.tiles;
 
         for (z in 0 until MapConfig.Z) {
             for (x in 0 until MapConfig.X) {
@@ -37,7 +37,6 @@ object MapProvider {
                             else -> tile.underlayId = ((opcode - 81).toByte())
                         }
                     }
-
                     tiles[z][x][y] = tile
                 }
             }

@@ -13,13 +13,13 @@ class MapLoader : Loader {
     override fun load(): Serializable {
         val index = Library.index(Indexes.MAPS);
 
-        val definitions =  Library.mapArchiveKeys().mapNotNull {
+        val definitions =  Library.mapArchiveKeys().map {
             val regionX: Int = it.id  shr 8
             val regionY: Int = it.id and 0xFF
             val mapArchiveId: Int = index.archiveId(Library.getMapArchiveName(regionX, regionY))
             val mapArchive: Archive = index.archive(mapArchiveId)!!
             val mapData: ByteBuffer = ByteBuffer.wrap(mapArchive.file(0)?.data)
-            var def = MapDefinition(it.id);
+            val def = MapDefinition(it.id);
             def.regionX = regionX
             def.regionY = regionY
             MapProvider.decode(mapData, def)
