@@ -2,8 +2,16 @@ package com.osedit.cache
 
 import com.displee.cache.CacheLibrary
 import com.displee.cache.index.Index
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.osedit.spring.App
 import com.osedit.spring.domain.*
+import java.io.BufferedReader
+import java.io.IOException
+import java.lang.reflect.Type
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 object Library {
@@ -117,4 +125,29 @@ object Library {
         return definitions[ObjectDefinition::class.java]?.filterIsInstance<ObjectDefinition>()
     }
 
+    fun maps(): List<MapDefinition>? {
+        return definitions[MapDefinition::class.java]?.filterIsInstance<MapDefinition>()
+    }
+
+    fun mapArchiveKeys(): List<MapArchiveKey> {
+        return loadJSONFile(String.format("./%s/xteas.json", App.baseDirectory()), object : TypeToken<List<MapArchiveKey>>() {}.type)
+    }
+
+    fun getMapArchiveName(regionX: Int, regionY: Int): String {
+        return String.format("m%s_%s", regionX, regionY);
+    }
+
+    fun getLocationsArchiveName(regionX: Int, regionY: Int): String {
+        return String.format("l%s_%s", regionX, regionY);
+    }
+
+    private fun <T> loadJSONFile(path: String, type: Type): T {
+        var bufferedReader: BufferedReader? = null
+        try {
+            bufferedReader = Files.newBufferedReader(Paths.get(path))
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return Gson().fromJson(bufferedReader, type)
+    }
 }

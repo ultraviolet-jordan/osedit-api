@@ -32,7 +32,9 @@ class OverlayController(@Autowired private val overlayService: OverlayService) {
     }
 
     @GetMapping("/view/{overlayId}", produces = [MediaType.IMAGE_PNG_VALUE])
-    fun viewOverlay(@PathVariable("overlayId") overlayId: Int, @RequestParam width: Int = 50, @RequestParam height: Int = 50): ResponseEntity<ByteArray>? {
+    fun viewOverlay(@PathVariable("overlayId") overlayId: Int,
+                    @RequestParam(required = false, defaultValue = "50") width: Int = 50,
+                    @RequestParam(required = false, defaultValue = "50") height: Int = 50): ResponseEntity<ByteArray>? {
         return overlayService.getOverlayPNG(overlayId, width, height)?.map {
             ResponseEntity.ok(it)
         }?.orElseGet {
