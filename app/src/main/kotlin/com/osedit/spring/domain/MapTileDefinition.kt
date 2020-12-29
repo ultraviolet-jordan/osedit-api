@@ -5,7 +5,7 @@ import javax.persistence.Id
 import javax.persistence.OneToMany
 
 @Entity
-data class MapTileDefinition(@Id private val id: Int? = 0): Definition {
+data class MapTileDefinition(@Id val id: Int? = 0): Definition {
     var height: Int? = null
     var attrOpcode = 0
     var settings: Byte = 0

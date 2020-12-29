@@ -5,7 +5,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-data class NpcDefinition(@Id private val id: Int? = 0) : Definition {
+data class NpcDefinition(@Id val id: Int? = 0) : Definition {
     var name: String = "null"
     var size = 1
     var models: IntArray? = null

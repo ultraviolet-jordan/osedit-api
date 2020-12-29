@@ -5,7 +5,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-data class SequenceDefinition(@Id private val id: Int? = 0) : Definition {
+data class SequenceDefinition(@Id val id: Int? = 0) : Definition {
     @Column(length = 1191)
     var frameIDs: IntArray? = null
     @Column(length = 387)

@@ -6,7 +6,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-data class ObjectDefinition(@Id private val id: Int? = 0) : Definition {
+data class ObjectDefinition(@Id val id: Int? = 0) : Definition {
     var retextureToFind: ShortArray? = null
     var decorDisplacement = 16
     var isHollow = false

@@ -5,7 +5,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-data class ItemDefinition(@Id private val id: Int? = 0) : Definition {
+data class ItemDefinition(@Id val id: Int? = 0) : Definition {
     var name: String = "null"
     var resizeX: Int = 128
     var resizeY: Int = 128

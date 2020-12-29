@@ -4,7 +4,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-data class SpotAnimationDefinition(@Id private val id: Int? = 0) : Definition {
+data class SpotAnimationDefinition(@Id val id: Int? = 0) : Definition {
     var rotation: Int = 0
     var textureToReplace: ShortArray? = null
     var textureToFind: ShortArray? = null

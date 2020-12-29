@@ -4,7 +4,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-data class AreaDefinition(@Id private val id: Int? = 0): Definition {
+data class AreaDefinition(@Id val id: Int? = 0): Definition {
     var field3292: IntArray? = null
     var spriteId: Int = -1
     var field3294: Int = -1

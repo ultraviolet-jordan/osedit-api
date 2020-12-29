@@ -4,7 +4,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-data class HealthBarDefinition(@Id private val id: Int? = 0) : Definition {
+data class HealthBarDefinition(@Id val id: Int? = 0) : Definition {
     var field3276: Int = 0
     var field3277: Int = 255
     var field3278: Int = 255

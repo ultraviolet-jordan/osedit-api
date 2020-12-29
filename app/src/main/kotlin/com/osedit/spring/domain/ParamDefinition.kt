@@ -4,7 +4,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-data class ParamDefinition(@Id private val id: Int? = 0) : Definition {
+data class ParamDefinition(@Id val id: Int? = 0) : Definition {
     var type: Char? = null
     var isMembers: Boolean = true
     var defaultInt: Int = 0
