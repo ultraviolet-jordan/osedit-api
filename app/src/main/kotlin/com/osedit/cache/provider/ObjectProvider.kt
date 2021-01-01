@@ -2,17 +2,19 @@ package com.osedit.cache.provider
 
 import com.osedit.cache.util.ByteBufferExt
 import com.osedit.spring.domain.Definition
+import com.osedit.spring.domain.ItemDefinition
 import com.osedit.spring.domain.ObjectDefinition
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.nio.ByteBuffer
 import java.util.stream.IntStream
 
-object ObjectProvider {
+object ObjectProvider : Provider<ObjectDefinition> {
 
     private val log: Logger = LoggerFactory.getLogger(ObjectProvider::class.java)
 
-    fun decode(buffer: ByteBuffer, definition: ObjectDefinition): Definition {
+    override fun decode(buffer: ByteBuffer, definition: ObjectDefinition): Definition {
+
         do when (val opcode: Int = buffer.get().toInt() and 0xff) {
             1 -> {
                 val length: Int = buffer.get().toInt() and 0xff

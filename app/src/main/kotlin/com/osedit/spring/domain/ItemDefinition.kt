@@ -1,5 +1,9 @@
 package com.osedit.spring.domain
 
+import com.osedit.cache.Config
+import com.osedit.cache.Indices
+import com.osedit.cache.provider.ItemProvider
+import java.nio.ByteBuffer
 import javax.persistence.ElementCollection
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -55,4 +59,20 @@ data class ItemDefinition(@Id private val id: Int? = 0) : Definition {
     var placeholderTemplateId: Int = -1
     @ElementCollection
     var params = mutableMapOf<Int, String>()
+
+    override fun path(): String {
+        return "/items"
+    }
+
+    override fun config(): Config {
+        return Config.ITEMS
+    }
+
+    override fun indices(): Indices {
+        return Indices.CONFIG
+    }
+
+    override fun decode(byteBuffer: ByteBuffer): Definition {
+        return ItemProvider.decode(byteBuffer, this)
+    }
 }

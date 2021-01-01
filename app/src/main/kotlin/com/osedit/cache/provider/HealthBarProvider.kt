@@ -6,11 +6,11 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.nio.ByteBuffer
 
-object HealthBarProvider {
+object HealthBarProvider : Provider<HealthBarDefinition> {
 
     private val log: Logger = LoggerFactory.getLogger(HealthBarProvider::class.java)
 
-    fun decode(buffer: ByteBuffer, definition: HealthBarDefinition): Definition {
+    override fun decode(buffer: ByteBuffer, definition: HealthBarDefinition) : Definition {
         do {
             when (val opcode: Int = buffer.get().toInt() and 0xff) {
                 1 -> definition.field3276 = buffer.short.toInt() and 0xffff

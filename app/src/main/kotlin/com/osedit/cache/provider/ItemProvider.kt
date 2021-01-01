@@ -7,11 +7,10 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.nio.ByteBuffer
 
-object ItemProvider {
+object ItemProvider : Provider<ItemDefinition> {
 
-    private val log: Logger = LoggerFactory.getLogger(ItemProvider::class.java)
-
-    fun decode(buffer: ByteBuffer, definition: ItemDefinition): Definition {
+    override fun decode(buffer: ByteBuffer, definition: ItemDefinition): Definition {
+        val log: Logger = LoggerFactory.getLogger(ItemProvider::class.java)
         do {
             when (val opcode: Int = buffer.get().toInt() and 0xff) {
                 1 -> definition.inventoryModel = buffer.short.toInt() and 0xffff

@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 open class WebConfiguration {
-
     companion object {
         @Bean
         fun corsConfigurer(): WebMvcConfigurer {

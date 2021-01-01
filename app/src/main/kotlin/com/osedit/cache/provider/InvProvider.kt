@@ -6,11 +6,11 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.nio.ByteBuffer
 
-object InvProvider {
+object InvProvider : Provider<InvDefinition> {
 
     private val log: Logger = LoggerFactory.getLogger(InvProvider::class.java)
 
-    fun decode(buffer: ByteBuffer, definition: InvDefinition): Definition {
+    override fun decode(buffer: ByteBuffer, definition: InvDefinition): Definition {
         do {
             when (val opcode: Int = buffer.get().toInt() and 0xff) {
                 2 -> definition.size = buffer.short.toInt() and 0xffff
@@ -20,5 +20,4 @@ object InvProvider {
         } while (true)
         return definition
     }
-
 }

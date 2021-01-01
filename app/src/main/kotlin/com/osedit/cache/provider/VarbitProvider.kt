@@ -1,16 +1,17 @@
 package com.osedit.cache.provider
 
 import com.osedit.spring.domain.Definition
+import com.osedit.spring.domain.ItemDefinition
 import com.osedit.spring.domain.VarbitDefinition
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.nio.ByteBuffer
 
-object VarbitProvider {
+object VarbitProvider : Provider<VarbitDefinition> {
 
     private val log: Logger = LoggerFactory.getLogger(VarbitProvider::class.java)
 
-    fun decode(buffer: ByteBuffer, definition: VarbitDefinition): Definition {
+    override fun decode(buffer: ByteBuffer, definition: VarbitDefinition): Definition {
         do {
             when (val opcode: Int = buffer.get().toInt() and 0xff) {
                 1 -> {
@@ -24,5 +25,4 @@ object VarbitProvider {
         } while (true)
         return definition
     }
-
 }

@@ -1,7 +1,7 @@
 package com.osedit.spring.service
 
 import com.osedit.cache.Library
-import com.osedit.cache.loader.ItemLoader
+import com.osedit.cache.loader.DefinitionLoader
 import com.osedit.spring.App
 import com.osedit.spring.domain.ItemDefinition
 import org.junit.Before
@@ -14,7 +14,7 @@ internal class ItemServiceTest {
         App::class.java.getResourceAsStream(App.resource).use {
             App.properties.load(it)
         }
-        Library.store(ItemDefinition::class.java, ItemLoader().load().definitions)
+        Library.store(ItemDefinition::class.java, DefinitionLoader.load(ItemDefinition()))
     }
 
     @Test

@@ -1,5 +1,9 @@
 package com.osedit.spring.domain
 
+import com.osedit.cache.Config
+import com.osedit.cache.Indices
+import com.osedit.cache.provider.SequenceProvider
+import java.nio.ByteBuffer
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -24,4 +28,20 @@ data class SequenceDefinition(@Id private val id: Int? = 0) : Definition {
     var precedenceAnimating: Int = -1
     var priority: Int = -1
     var replyMode: Int = 2
+
+    override fun path(): String {
+        return "/sequences"
+    }
+
+    override fun config(): Config {
+        return Config.SEQUENCES
+    }
+
+    override fun indices(): Indices {
+        return Indices.CONFIG
+    }
+
+    override fun decode(byteBuffer: ByteBuffer): Definition {
+        return SequenceProvider.decode(byteBuffer, this)
+    }
 }

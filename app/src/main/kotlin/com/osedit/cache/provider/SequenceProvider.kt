@@ -7,11 +7,11 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.nio.ByteBuffer
 
-object SequenceProvider {
+object SequenceProvider : Provider<SequenceDefinition> {
 
     private val log: Logger = LoggerFactory.getLogger(SequenceProvider::class.java)
 
-    fun decode(buffer: ByteBuffer, definition: SequenceDefinition): Definition {
+    override fun decode(buffer: ByteBuffer, definition: SequenceDefinition): Definition {
         do {
             when (val opcode: Int = buffer.get().toInt() and 0xff) {
                 1 -> {

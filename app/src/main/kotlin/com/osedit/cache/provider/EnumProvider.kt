@@ -7,11 +7,11 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.nio.ByteBuffer
 
-object EnumProvider {
+object EnumProvider : Provider<EnumDefinition> {
 
     private val log: Logger = LoggerFactory.getLogger(EnumProvider::class.java)
 
-    fun decode(buffer: ByteBuffer, definition: EnumDefinition): Definition {
+    override fun decode(buffer: ByteBuffer, definition: EnumDefinition): Definition {
         do {
             when (val opcode: Int = buffer.get().toInt() and 0xff) {
                 1 -> definition.keyType = (buffer.get().toInt() and 0xff).toChar()

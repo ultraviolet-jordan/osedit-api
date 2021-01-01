@@ -6,11 +6,11 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.nio.ByteBuffer
 
-object SpotAnimationProvider {
+object SpotAnimationProvider : Provider<SpotAnimationDefinition> {
 
     private val log: Logger = LoggerFactory.getLogger(SpotAnimationProvider::class.java)
 
-    fun decode(buffer: ByteBuffer, definition: SpotAnimationDefinition): Definition {
+    override fun decode(buffer: ByteBuffer, definition: SpotAnimationDefinition): Definition {
         do {
             when (val opcode: Int = buffer.get().toInt() and 0xff) {
                 1 -> definition.modelId = buffer.short.toInt() and 0xffff

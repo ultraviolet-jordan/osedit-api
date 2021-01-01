@@ -1,5 +1,9 @@
 package com.osedit.spring.domain
 
+import com.osedit.cache.Config
+import com.osedit.cache.Indices
+import com.osedit.cache.provider.NpcProvider
+import java.nio.ByteBuffer
 import javax.persistence.ElementCollection
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -41,4 +45,20 @@ data class NpcDefinition(@Id private val id: Int? = 0) : Definition {
     var isPet = false
     @ElementCollection
     var params = mutableMapOf<Int, String>()
+
+    override fun path(): String {
+        return "/npcs"
+    }
+
+    override fun config(): Config {
+        return Config.NPCS
+    }
+
+    override fun indices(): Indices {
+        return Indices.CONFIG
+    }
+
+    override fun decode(byteBuffer: ByteBuffer): Definition {
+        return NpcProvider.decode(byteBuffer, this)
+    }
 }

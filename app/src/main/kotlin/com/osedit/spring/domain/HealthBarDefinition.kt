@@ -1,5 +1,9 @@
 package com.osedit.spring.domain
 
+import com.osedit.cache.Config
+import com.osedit.cache.Indices
+import com.osedit.cache.provider.HealthBarProvider
+import java.nio.ByteBuffer
 import javax.persistence.Entity
 import javax.persistence.Id
 
@@ -15,4 +19,20 @@ data class HealthBarDefinition(@Id private val id: Int? = 0) : Definition {
     var healthBarBackSpriteId: Int = -1
     var healthScale: Int = 30
     var healthBarPadding: Int = 0
+
+    override fun path(): String {
+        return "/healthbars"
+    }
+
+    override fun config(): Config {
+        return Config.HEALTH_BARS
+    }
+
+    override fun indices(): Indices {
+        return Indices.SCRIPTS
+    }
+
+    override fun decode(byteBuffer: ByteBuffer): Definition {
+        return HealthBarProvider.decode(byteBuffer, this)
+    }
 }

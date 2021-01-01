@@ -1,13 +1,11 @@
 package com.osedit.spring
 
-import com.osedit.command.*
+import com.osedit.command.CacheProvider
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import java.util.*
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.Executors
 
 @SpringBootApplication
 open class App {
@@ -21,32 +19,10 @@ open class App {
             properties.load(it)
         }
 
-        //Latch is necessary.
-        val latch = CountDownLatch(11)
-        val commands = listOf(
-                CacheInvs(latch),
-                CacheObjects(latch),
-                CacheEnums(latch),
-                CacheNpcs(latch),
-                CacheItems(latch),
-                CacheParams(latch),
-                CacheSequences(latch),
-                CacheSpotAnimations(latch),
-                CacheVarbits(latch),
-                CacheHealthBars(latch),
-                CacheAreas(latch),
-        )
-        val cores = Runtime.getRuntime().availableProcessors()
-        if (cores > 4) {
-            val pool = Executors.newFixedThreadPool(cores)
-            commands.forEach(pool::execute)
-            pool.shutdown()
-        } else {
-            commands.forEach(Runnable::run)
-        }
-        latch.await()
+        //Cache definitions
+        CacheProvider.execute()
+
         log.info(String.format("Starting Spring after %sms.", System.currentTimeMillis() - start))
-        //The spring application.
         runApplication<App>()
     }
 
@@ -76,8 +52,8 @@ open class App {
         /**
          * Prompts the application console with performance numbers.
          */
-        fun prompt(command: Class<out Runnable>, start: Long) {
-            log.info(String.format("%s took %sms to cache.", command.simpleName, System.currentTimeMillis() - start))
+        fun prompt(className: String, start: Long) {
+            log.info(String.format("%s took %sms to cache.", className, System.currentTimeMillis() - start))
         }
     }
 

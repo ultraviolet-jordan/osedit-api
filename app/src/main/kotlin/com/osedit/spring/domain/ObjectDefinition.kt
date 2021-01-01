@@ -1,5 +1,9 @@
 package com.osedit.spring.domain
 
+import com.osedit.cache.Config
+import com.osedit.cache.Indices
+import com.osedit.cache.provider.ObjectProvider
+import java.nio.ByteBuffer
 import javax.persistence.Column
 import javax.persistence.ElementCollection
 import javax.persistence.Entity
@@ -53,4 +57,20 @@ data class ObjectDefinition(@Id private val id: Int? = 0) : Definition {
     var blocksProjectile: Boolean = true
     @ElementCollection
     var params = mutableMapOf<Int, String>()
+
+    override fun path(): String {
+        return "/objects"
+    }
+
+    override fun config(): Config {
+        return Config.OBJECTS
+    }
+
+    override fun indices(): Indices {
+        return Indices.CONFIG
+    }
+
+    override fun decode(byteBuffer: ByteBuffer): Definition {
+        return ObjectProvider.decode(byteBuffer, this)
+    }
 }
