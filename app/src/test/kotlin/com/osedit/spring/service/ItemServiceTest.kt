@@ -11,7 +11,7 @@ internal class ItemServiceTest {
 
     @Before
     fun init() {
-        App::class.java.getResourceAsStream("/application.properties").use {
+        App::class.java.getResourceAsStream(App.resource).use {
             App.properties.load(it)
         }
         Library.store(ItemDefinition::class.java, ItemLoader().load().definitions)
